@@ -49,3 +49,11 @@ def test_inspect_postgres_structure():
     assert isinstance(pg, dict)
     assert "psql_on_path" in pg
     assert "installed_in_program_files" in pg
+
+
+def test_network_tests_module_exists():
+    """Verify backend/network_tests.py module exists and functions are callable."""
+    from backend.network_tests import measure_network_performance, LatencyProbe, LatencySummary
+    assert callable(measure_network_performance)
+    assert LatencyProbe is not None
+    assert LatencySummary is not None
