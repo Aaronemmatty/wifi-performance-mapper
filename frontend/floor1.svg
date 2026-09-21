@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" id="floorplan-svg" data-floor="Floor-1">
+  <defs>
+    <style>
+      .bg-canvas { fill: #0f172a; }
+      .outer-wall { fill: none; stroke: #38bdf8; stroke-width: 4; }
+      .inner-wall { fill: none; stroke: #64748b; stroke-width: 2.5; stroke-dasharray: none; }
+      .room-bg { fill: #1e293b; fill-opacity: 0.6; }
+      .corridor-bg { fill: #0f172a; fill-opacity: 0.3; }
+      .room-label { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 600; fill: #94a3b8; text-anchor: middle; }
+      .room-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; font-weight: 400; fill: #64748b; text-anchor: middle; }
+      .door { stroke: #38bdf8; stroke-width: 2; stroke-linecap: round; }
+      .grid-cell { fill: rgba(56, 189, 248, 0.06); stroke: rgba(56, 189, 248, 0.25); stroke-width: 1; transition: fill 0.15s ease, stroke 0.15s ease; cursor: pointer; }
+      .grid-cell:hover { fill: rgba(56, 189, 248, 0.22); stroke: rgba(56, 189, 248, 0.8); stroke-width: 1.5; }
+      .cell-label { font-family: monospace; font-size: 8px; fill: rgba(148, 163, 184, 0.4); text-anchor: middle; pointer-events: none; }
+      .ap-icon { fill: #38bdf8; }
+      .compass-text { font-family: system-ui, sans-serif; font-size: 11px; fill: #64748b; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1000" height="600" class="bg-canvas" />
+
+  <!-- Floor Plan Architectural Layer -->
+  <g id="architectural-layer" pointer-events="none">
+    <!-- Outer Building Perimeter -->
+    <rect x="50" y="40" width="900" height="520" rx="4" class="outer-wall" />
+
+    <!-- Top Row Rooms -->
+    <!-- Room 101: Computer Lab A -->
+    <rect x="60" y="50" width="260" height="190" class="room-bg" />
+    <rect x="60" y="50" width="260" height="190" class="inner-wall" />
+    <text x="190" y="140" class="room-label">Computer Lab A</text>
+    <text x="190" y="156" class="room-sub">Room 101</text>
+    <!-- Door -->
+    <line x1="160" y1="240" x2="200" y2="240" class="door" stroke-dasharray="4 4" />
+
+    <!-- Room 102: Server & Network Operations -->
+    <rect x="330" y="50" width="180" height="190" class="room-bg" />
+    <rect x="330" y="50" width="180" height="190" class="inner-wall" />
+    <text x="420" y="140" class="room-label">Server / NOC</text>
+    <text x="420" y="156" class="room-sub">Room 102</text>
+    <line x1="400" y1="240" x2="440" y2="240" class="door" stroke-dasharray="4 4" />
+
+    <!-- Room 103: Computer Lab B -->
+    <rect x="520" y="50" width="260" height="190" class="room-bg" />
+    <rect x="520" y="50" width="260" height="190" class="inner-wall" />
+    <text x="650" y="140" class="room-label">Computer Lab B</text>
+    <text x="650" y="156" class="room-sub">Room 103</text>
+    <line x1="620" y1="240" x2="660" y2="240" class="door" stroke-dasharray="4 4" />
+
+    <!-- Room 104: Faculty Lounge -->
+    <rect x="790" y="50" width="150" height="190" class="room-bg" />
+    <rect x="790" y="50" width="150" height="190" class="inner-wall" />
+    <text x="865" y="140" class="room-label">Faculty Lounge</text>
+    <text x="865" y="156" class="room-sub">Room 104</text>
+    <line x1="820" y1="240" x2="860" y2="240" class="door" stroke-dasharray="4 4" />
+
+    <!-- Central Hallway / Corridor (y=240 to y=340) -->
+    <rect x="60" y="240" width="880" height="100" class="corridor-bg" />
+    <text x="500" y="295" class="room-label" fill="#475569" font-size="14" letter-spacing="4">MAIN CORRIDOR (FLOOR 1)</text>
+
+    <!-- Bottom Row Rooms -->
+    <!-- Room 105: Study Hall -->
+    <rect x="60" y="340" width="280" height="210" class="room-bg" />
+    <rect x="60" y="340" width="280" height="210" class="inner-wall" />
+    <text x="200" y="445" class="room-label">Student Study Hall</text>
+    <text x="200" y="461" class="room-sub">Room 105</text>
+    <line x1="170" y1="340" x2="210" y2="340" class="door" stroke-dasharray="4 4" />
+
+    <!-- Room 106: Lecture Auditorium -->
+    <rect x="350" y="340" width="340" height="210" class="room-bg" />
+    <rect x="350" y="340" width="340" height="210" class="inner-wall" />
+    <text x="520" y="445" class="room-label">Lecture Auditorium</text>
+    <text x="520" y="461" class="room-sub">Room 106</text>
+    <line x1="490" y1="340" x2="530" y2="340" class="door" stroke-dasharray="4 4" />
+
+    <!-- Room 107: Department Offices -->
+    <rect x="700" y="340" width="240" height="210" class="room-bg" />
+    <rect x="700" y="340" width="240" height="210" class="inner-wall" />
+    <text x="820" y="445" class="room-label">Admin &amp; Offices</text>
+    <text x="820" y="461" class="room-sub">Room 107</text>
+    <line x1="780" y1="340" x2="820" y2="340" class="door" stroke-dasharray="4 4" />
+
+    <!-- Decorative Compass & Title Badge -->
+    <g transform="translate(890, 290)">
+      <circle cx="0" cy="0" r="16" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+      <polygon points="0,-12 4,-2 0,0 -4,-2" fill="#38bdf8" />
+      <polygon points="0,12 4,2 0,0 -4,2" fill="#64748b" />
+      <text x="0" y="-14" class="compass-text" text-anchor="middle">N</text>
+    </g>
+  </g>
+
+  <!-- Interactive Grid Overlay (10 Columns x 6 Rows = 60 Cells) -->
+  <!-- Origin offset: x=70, y=55; Cell width=86, Cell height=80 -->
+  <g id="grid-overlay" data-floor="Floor-1" data-cols="10" data-rows="6">
+    <!-- Row 1 (y=55, row=1) -->
+    <rect id="cell-r01-c01" class="grid-cell" x="70" y="55" width="86" height="80" data-cell-id="cell-r01-c01" data-floor="Floor-1" data-row="1" data-col="1" data-x="1.0" data-y="1.0"><title>cell-r01-c01 (Floor-1, x=1.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c02" class="grid-cell" x="156" y="55" width="86" height="80" data-cell-id="cell-r01-c02" data-floor="Floor-1" data-row="1" data-col="2" data-x="2.0" data-y="1.0"><title>cell-r01-c02 (Floor-1, x=2.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c03" class="grid-cell" x="242" y="55" width="86" height="80" data-cell-id="cell-r01-c03" data-floor="Floor-1" data-row="1" data-col="3" data-x="3.0" data-y="1.0"><title>cell-r01-c03 (Floor-1, x=3.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c04" class="grid-cell" x="328" y="55" width="86" height="80" data-cell-id="cell-r01-c04" data-floor="Floor-1" data-row="1" data-col="4" data-x="4.0" data-y="1.0"><title>cell-r01-c04 (Floor-1, x=4.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c05" class="grid-cell" x="414" y="55" width="86" height="80" data-cell-id="cell-r01-c05" data-floor="Floor-1" data-row="1" data-col="5" data-x="5.0" data-y="1.0"><title>cell-r01-c05 (Floor-1, x=5.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c06" class="grid-cell" x="500" y="55" width="86" height="80" data-cell-id="cell-r01-c06" data-floor="Floor-1" data-row="1" data-col="6" data-x="6.0" data-y="1.0"><title>cell-r01-c06 (Floor-1, x=6.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c07" class="grid-cell" x="586" y="55" width="86" height="80" data-cell-id="cell-r01-c07" data-floor="Floor-1" data-row="1" data-col="7" data-x="7.0" data-y="1.0"><title>cell-r01-c07 (Floor-1, x=7.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c08" class="grid-cell" x="672" y="55" width="86" height="80" data-cell-id="cell-r01-c08" data-floor="Floor-1" data-row="1" data-col="8" data-x="8.0" data-y="1.0"><title>cell-r01-c08 (Floor-1, x=8.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c09" class="grid-cell" x="758" y="55" width="86" height="80" data-cell-id="cell-r01-c09" data-floor="Floor-1" data-row="1" data-col="9" data-x="9.0" data-y="1.0"><title>cell-r01-c09 (Floor-1, x=9.0, y=1.0)</title></rect>
+    <rect id="cell-r01-c10" class="grid-cell" x="844" y="55" width="86" height="80" data-cell-id="cell-r01-c10" data-floor="Floor-1" data-row="1" data-col="10" data-x="10.0" data-y="1.0"><title>cell-r01-c10 (Floor-1, x=10.0, y=1.0)</title></rect>
+
+    <!-- Row 2 (y=135, row=2) -->
+    <rect id="cell-r02-c01" class="grid-cell" x="70" y="135" width="86" height="80" data-cell-id="cell-r02-c01" data-floor="Floor-1" data-row="2" data-col="1" data-x="1.0" data-y="2.0"><title>cell-r02-c01 (Floor-1, x=1.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c02" class="grid-cell" x="156" y="135" width="86" height="80" data-cell-id="cell-r02-c02" data-floor="Floor-1" data-row="2" data-col="2" data-x="2.0" data-y="2.0"><title>cell-r02-c02 (Floor-1, x=2.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c03" class="grid-cell" x="242" y="135" width="86" height="80" data-cell-id="cell-r02-c03" data-floor="Floor-1" data-row="2" data-col="3" data-x="3.0" data-y="2.0"><title>cell-r02-c03 (Floor-1, x=3.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c04" class="grid-cell" x="328" y="135" width="86" height="80" data-cell-id="cell-r02-c04" data-floor="Floor-1" data-row="2" data-col="4" data-x="4.0" data-y="2.0"><title>cell-r02-c04 (Floor-1, x=4.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c05" class="grid-cell" x="414" y="135" width="86" height="80" data-cell-id="cell-r02-c05" data-floor="Floor-1" data-row="2" data-col="5" data-x="5.0" data-y="2.0"><title>cell-r02-c05 (Floor-1, x=5.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c06" class="grid-cell" x="500" y="135" width="86" height="80" data-cell-id="cell-r02-c06" data-floor="Floor-1" data-row="2" data-col="6" data-x="6.0" data-y="2.0"><title>cell-r02-c06 (Floor-1, x=6.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c07" class="grid-cell" x="586" y="135" width="86" height="80" data-cell-id="cell-r02-c07" data-floor="Floor-1" data-row="2" data-col="7" data-x="7.0" data-y="2.0"><title>cell-r02-c07 (Floor-1, x=7.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c08" class="grid-cell" x="672" y="135" width="86" height="80" data-cell-id="cell-r02-c08" data-floor="Floor-1" data-row="2" data-col="8" data-x="8.0" data-y="2.0"><title>cell-r02-c08 (Floor-1, x=8.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c09" class="grid-cell" x="758" y="135" width="86" height="80" data-cell-id="cell-r02-c09" data-floor="Floor-1" data-row="2" data-col="9" data-x="9.0" data-y="2.0"><title>cell-r02-c09 (Floor-1, x=9.0, y=2.0)</title></rect>
+    <rect id="cell-r02-c10" class="grid-cell" x="844" y="135" width="86" height="80" data-cell-id="cell-r02-c10" data-floor="Floor-1" data-row="2" data-col="10" data-x="10.0" data-y="2.0"><title>cell-r02-c10 (Floor-1, x=10.0, y=2.0)</title></rect>
+
+    <!-- Row 3 (y=215, row=3) -->
+    <rect id="cell-r03-c01" class="grid-cell" x="70" y="215" width="86" height="80" data-cell-id="cell-r03-c01" data-floor="Floor-1" data-row="3" data-col="1" data-x="1.0" data-y="3.0"><title>cell-r03-c01 (Floor-1, x=1.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c02" class="grid-cell" x="156" y="215" width="86" height="80" data-cell-id="cell-r03-c02" data-floor="Floor-1" data-row="3" data-col="2" data-x="2.0" data-y="3.0"><title>cell-r03-c02 (Floor-1, x=2.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c03" class="grid-cell" x="242" y="215" width="86" height="80" data-cell-id="cell-r03-c03" data-floor="Floor-1" data-row="3" data-col="3" data-x="3.0" data-y="3.0"><title>cell-r03-c03 (Floor-1, x=3.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c04" class="grid-cell" x="328" y="215" width="86" height="80" data-cell-id="cell-r03-c04" data-floor="Floor-1" data-row="3" data-col="4" data-x="4.0" data-y="3.0"><title>cell-r03-c04 (Floor-1, x=4.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c05" class="grid-cell" x="414" y="215" width="86" height="80" data-cell-id="cell-r03-c05" data-floor="Floor-1" data-row="3" data-col="5" data-x="5.0" data-y="3.0"><title>cell-r03-c05 (Floor-1, x=5.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c06" class="grid-cell" x="500" y="215" width="86" height="80" data-cell-id="cell-r03-c06" data-floor="Floor-1" data-row="3" data-col="6" data-x="6.0" data-y="3.0"><title>cell-r03-c06 (Floor-1, x=6.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c07" class="grid-cell" x="586" y="215" width="86" height="80" data-cell-id="cell-r03-c07" data-floor="Floor-1" data-row="3" data-col="7" data-x="7.0" data-y="3.0"><title>cell-r03-c07 (Floor-1, x=7.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c08" class="grid-cell" x="672" y="215" width="86" height="80" data-cell-id="cell-r03-c08" data-floor="Floor-1" data-row="3" data-col="8" data-x="8.0" data-y="3.0"><title>cell-r03-c08 (Floor-1, x=8.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c09" class="grid-cell" x="758" y="215" width="86" height="80" data-cell-id="cell-r03-c09" data-floor="Floor-1" data-row="3" data-col="9" data-x="9.0" data-y="3.0"><title>cell-r03-c09 (Floor-1, x=9.0, y=3.0)</title></rect>
+    <rect id="cell-r03-c10" class="grid-cell" x="844" y="215" width="86" height="80" data-cell-id="cell-r03-c10" data-floor="Floor-1" data-row="3" data-col="10" data-x="10.0" data-y="3.0"><title>cell-r03-c10 (Floor-1, x=10.0, y=3.0)</title></rect>
+
+    <!-- Row 4 (y=295, row=4) -->
+    <rect id="cell-r04-c01" class="grid-cell" x="70" y="295" width="86" height="80" data-cell-id="cell-r04-c01" data-floor="Floor-1" data-row="4" data-col="1" data-x="1.0" data-y="4.0"><title>cell-r04-c01 (Floor-1, x=1.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c02" class="grid-cell" x="156" y="295" width="86" height="80" data-cell-id="cell-r04-c02" data-floor="Floor-1" data-row="4" data-col="2" data-x="2.0" data-y="4.0"><title>cell-r04-c02 (Floor-1, x=2.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c03" class="grid-cell" x="242" y="295" width="86" height="80" data-cell-id="cell-r04-c03" data-floor="Floor-1" data-row="4" data-col="3" data-x="3.0" data-y="4.0"><title>cell-r04-c03 (Floor-1, x=3.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c04" class="grid-cell" x="328" y="295" width="86" height="80" data-cell-id="cell-r04-c04" data-floor="Floor-1" data-row="4" data-col="4" data-x="4.0" data-y="4.0"><title>cell-r04-c04 (Floor-1, x=4.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c05" class="grid-cell" x="414" y="295" width="86" height="80" data-cell-id="cell-r04-c05" data-floor="Floor-1" data-row="4" data-col="5" data-x="5.0" data-y="4.0"><title>cell-r04-c05 (Floor-1, x=5.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c06" class="grid-cell" x="500" y="295" width="86" height="80" data-cell-id="cell-r04-c06" data-floor="Floor-1" data-row="4" data-col="6" data-x="6.0" data-y="4.0"><title>cell-r04-c06 (Floor-1, x=6.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c07" class="grid-cell" x="586" y="295" width="86" height="80" data-cell-id="cell-r04-c07" data-floor="Floor-1" data-row="4" data-col="7" data-x="7.0" data-y="4.0"><title>cell-r04-c07 (Floor-1, x=7.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c08" class="grid-cell" x="672" y="295" width="86" height="80" data-cell-id="cell-r04-c08" data-floor="Floor-1" data-row="4" data-col="8" data-x="8.0" data-y="4.0"><title>cell-r04-c08 (Floor-1, x=8.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c09" class="grid-cell" x="758" y="295" width="86" height="80" data-cell-id="cell-r04-c09" data-floor="Floor-1" data-row="4" data-col="9" data-x="9.0" data-y="4.0"><title>cell-r04-c09 (Floor-1, x=9.0, y=4.0)</title></rect>
+    <rect id="cell-r04-c10" class="grid-cell" x="844" y="295" width="86" height="80" data-cell-id="cell-r04-c10" data-floor="Floor-1" data-row="4" data-col="10" data-x="10.0" data-y="4.0"><title>cell-r04-c10 (Floor-1, x=10.0, y=4.0)</title></rect>
+
+    <!-- Row 5 (y=375, row=5) -->
+    <rect id="cell-r05-c01" class="grid-cell" x="70" y="375" width="86" height="80" data-cell-id="cell-r05-c01" data-floor="Floor-1" data-row="5" data-col="1" data-x="1.0" data-y="5.0"><title>cell-r05-c01 (Floor-1, x=1.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c02" class="grid-cell" x="156" y="375" width="86" height="80" data-cell-id="cell-r05-c02" data-floor="Floor-1" data-row="5" data-col="2" data-x="2.0" data-y="5.0"><title>cell-r05-c02 (Floor-1, x=2.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c03" class="grid-cell" x="242" y="375" width="86" height="80" data-cell-id="cell-r05-c03" data-floor="Floor-1" data-row="5" data-col="3" data-x="3.0" data-y="5.0"><title>cell-r05-c03 (Floor-1, x=3.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c04" class="grid-cell" x="328" y="375" width="86" height="80" data-cell-id="cell-r05-c04" data-floor="Floor-1" data-row="5" data-col="4" data-x="4.0" data-y="5.0"><title>cell-r05-c04 (Floor-1, x=4.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c05" class="grid-cell" x="414" y="375" width="86" height="80" data-cell-id="cell-r05-c05" data-floor="Floor-1" data-row="5" data-col="5" data-x="5.0" data-y="5.0"><title>cell-r05-c05 (Floor-1, x=5.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c06" class="grid-cell" x="500" y="375" width="86" height="80" data-cell-id="cell-r05-c06" data-floor="Floor-1" data-row="5" data-col="6" data-x="6.0" data-y="5.0"><title>cell-r05-c06 (Floor-1, x=6.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c07" class="grid-cell" x="586" y="375" width="86" height="80" data-cell-id="cell-r05-c07" data-floor="Floor-1" data-row="5" data-col="7" data-x="7.0" data-y="5.0"><title>cell-r05-c07 (Floor-1, x=7.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c08" class="grid-cell" x="672" y="375" width="86" height="80" data-cell-id="cell-r05-c08" data-floor="Floor-1" data-row="5" data-col="8" data-x="8.0" data-y="5.0"><title>cell-r05-c08 (Floor-1, x=8.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c09" class="grid-cell" x="758" y="375" width="86" height="80" data-cell-id="cell-r05-c09" data-floor="Floor-1" data-row="5" data-col="9" data-x="9.0" data-y="5.0"><title>cell-r05-c09 (Floor-1, x=9.0, y=5.0)</title></rect>
+    <rect id="cell-r05-c10" class="grid-cell" x="844" y="375" width="86" height="80" data-cell-id="cell-r05-c10" data-floor="Floor-1" data-row="5" data-col="10" data-x="10.0" data-y="5.0"><title>cell-r05-c10 (Floor-1, x=10.0, y=5.0)</title></rect>
+
+    <!-- Row 6 (y=455, row=6) -->
+    <rect id="cell-r06-c01" class="grid-cell" x="70" y="455" width="86" height="80" data-cell-id="cell-r06-c01" data-floor="Floor-1" data-row="6" data-col="1" data-x="1.0" data-y="6.0"><title>cell-r06-c01 (Floor-1, x=1.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c02" class="grid-cell" x="156" y="455" width="86" height="80" data-cell-id="cell-r06-c02" data-floor="Floor-1" data-row="6" data-col="2" data-x="2.0" data-y="6.0"><title>cell-r06-c02 (Floor-1, x=2.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c03" class="grid-cell" x="242" y="455" width="86" height="80" data-cell-id="cell-r06-c03" data-floor="Floor-1" data-row="6" data-col="3" data-x="3.0" data-y="6.0"><title>cell-r06-c03 (Floor-1, x=3.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c04" class="grid-cell" x="328" y="455" width="86" height="80" data-cell-id="cell-r06-c04" data-floor="Floor-1" data-row="6" data-col="4" data-x="4.0" data-y="6.0"><title>cell-r06-c04 (Floor-1, x=4.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c05" class="grid-cell" x="414" y="455" width="86" height="80" data-cell-id="cell-r06-c05" data-floor="Floor-1" data-row="6" data-col="5" data-x="5.0" data-y="6.0"><title>cell-r06-c05 (Floor-1, x=5.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c06" class="grid-cell" x="500" y="455" width="86" height="80" data-cell-id="cell-r06-c06" data-floor="Floor-1" data-row="6" data-col="6" data-x="6.0" data-y="6.0"><title>cell-r06-c06 (Floor-1, x=6.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c07" class="grid-cell" x="586" y="455" width="86" height="80" data-cell-id="cell-r06-c07" data-floor="Floor-1" data-row="6" data-col="7" data-x="7.0" data-y="6.0"><title>cell-r06-c07 (Floor-1, x=7.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c08" class="grid-cell" x="672" y="455" width="86" height="80" data-cell-id="cell-r06-c08" data-floor="Floor-1" data-row="6" data-col="8" data-x="8.0" data-y="6.0"><title>cell-r06-c08 (Floor-1, x=8.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c09" class="grid-cell" x="758" y="455" width="86" height="80" data-cell-id="cell-r06-c09" data-floor="Floor-1" data-row="6" data-col="9" data-x="9.0" data-y="6.0"><title>cell-r06-c09 (Floor-1, x=9.0, y=6.0)</title></rect>
+    <rect id="cell-r06-c10" class="grid-cell" x="844" y="455" width="86" height="80" data-cell-id="cell-r06-c10" data-floor="Floor-1" data-row="6" data-col="10" data-x="10.0" data-y="6.0"><title>cell-r06-c10 (Floor-1, x=10.0, y=6.0)</title></rect>
+  </g>
+</svg>

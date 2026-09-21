@@ -75,3 +75,45 @@ def test_api_module_exists():
     from backend.main import app, create_app
     assert app is not None
     assert callable(create_app)
+
+
+def test_measurement_module_exists():
+    """Verify backend/measurement.py exists and exports measurement orchestration interfaces."""
+    from backend.measurement import (
+        calculate_median,
+        collect_single_sample,
+        aggregate_samples,
+        measure_grid_point,
+        SingleSampleResult,
+        AggregatedMeasurement,
+    )
+    assert callable(calculate_median)
+    assert callable(collect_single_sample)
+    assert callable(aggregate_samples)
+    assert callable(measure_grid_point)
+    assert SingleSampleResult is not None
+    assert AggregatedMeasurement is not None
+
+
+def test_measurement_service_module_exists():
+    """Verify backend/measurement_service.py exists and exports service interface."""
+    from backend.measurement_service import (
+        MeasurementServiceResult,
+        execute_and_persist_measurement,
+    )
+    assert callable(execute_and_persist_measurement)
+    assert MeasurementServiceResult is not None
+
+
+def test_floor_grid_module_exists():
+    """Verify backend/floor_grid.py exists and exports validation interfaces."""
+    from backend.floor_grid import (
+        validate_floor_plan_svg,
+        get_default_floor_plan_path,
+        FloorPlanValidationResult,
+        GridCellInfo,
+    )
+    assert callable(validate_floor_plan_svg)
+    assert callable(get_default_floor_plan_path)
+    assert FloorPlanValidationResult is not None
+    assert GridCellInfo is not None
