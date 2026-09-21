@@ -57,3 +57,21 @@ def test_network_tests_module_exists():
     assert callable(measure_network_performance)
     assert LatencyProbe is not None
     assert LatencySummary is not None
+
+
+def test_database_module_exists():
+    """Verify backend/database.py and backend/repository.py exist and functions are callable."""
+    from backend.database import get_database_url, init_db, get_connection
+    from backend.repository import create_session, create_measurement
+    assert callable(get_database_url)
+    assert callable(init_db)
+    assert callable(get_connection)
+    assert callable(create_session)
+    assert callable(create_measurement)
+
+
+def test_api_module_exists():
+    """Verify backend/main.py exists and exports FastAPI app."""
+    from backend.main import app, create_app
+    assert app is not None
+    assert callable(create_app)
