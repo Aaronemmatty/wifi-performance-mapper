@@ -55,11 +55,14 @@ def test_mask_database_url():
     assert mask_database_url("") == "None"
 
 
-def test_database_probe_connection_unconfigured():
+def test_database_probe_connection_unconfigured(monkeypatch):
     """Test db_test_connection handles unconfigured and invalid URLs cleanly."""
-    ok, msg = db_test_connection(database_url=None)
-    assert ok is False
-    assert "not configured" in msg.lower()
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.delenv("TEST_DATABASE_URL", raising=False)
+    with mock.patch("backend.database.parse_env_file", return_value={}):
+        ok, msg = db_test_connection(database_url=None)
+        assert ok is False
+        assert "not configured" in msg.lower()
 
 
 def test_get_database_url_precedence(monkeypatch):

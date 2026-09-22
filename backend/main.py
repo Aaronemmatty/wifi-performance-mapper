@@ -10,9 +10,11 @@ from __future__ import annotations
 
 import math
 from datetime import datetime
+from pathlib import Path
 from typing import Optional, List, Dict, Any
 
 from fastapi import FastAPI, HTTPException, Query, Response, status
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 import psycopg2
 
@@ -447,6 +449,13 @@ def create_app(database_url: Optional[str] = None, is_test: bool = False) -> Fas
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="An internal server error occurred while orchestrating measurement.",
             )
+
+    # ------------------------------------------------------------------
+    # Static Frontend Serving (M12)
+    # ------------------------------------------------------------------
+    frontend_dir = Path(__file__).resolve().parent.parent / "frontend"
+    if frontend_dir.is_dir():
+        app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="frontend")
 
     return app
 
