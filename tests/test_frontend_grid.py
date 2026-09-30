@@ -213,24 +213,24 @@ def test_javascript_interaction_and_measurement_contract():
 # ----------------------------------------------------------------------
 
 def test_m13_metric_configuration_and_mappings():
-    """Verify that app.js defines exactly the 4 primary metrics and excludes signal_percent from selector."""
+    """Verify that app.js defines primary metric structures and HTML selector exposes only active metrics (RSSI, Latency, Loss) while deferred Throughput is excluded from selector."""
     app_js_path = FRONTEND_DIR / "app.js"
     assert app_js_path.is_file()
     js_content = app_js_path.read_text(encoding="utf-8")
 
-    # Exactly four primary metric backend fields
+    # Primary metric backend fields in app.js (preserved for future throughput activation)
     assert "rssi_dbm" in js_content, "app.js missing rssi_dbm metric key"
     assert "latency_ms" in js_content, "app.js missing latency_ms metric key"
     assert "packet_loss_percent" in js_content, "app.js missing packet_loss_percent metric key"
     assert "throughput_mbps" in js_content, "app.js missing throughput_mbps metric key"
 
-    # Verify HTML selector contains exactly the 4 primary options
+    # Verify HTML selector contains only active survey options and excludes deferred throughput
     html_path = FRONTEND_DIR / "index.html"
     html_content = html_path.read_text(encoding="utf-8")
     assert 'value="rssi_dbm"' in html_content
     assert 'value="latency_ms"' in html_content
     assert 'value="packet_loss_percent"' in html_content
-    assert 'value="throughput_mbps"' in html_content
+    assert 'value="throughput_mbps"' not in html_content, "throughput_mbps must be hidden from metric selector while unverified/deferred"
     assert 'value="signal_percent"' not in html_content, "signal_percent must not be in heatmap metric selector"
 
 

@@ -115,10 +115,12 @@ To verify the throughput engine without relying on external Internet servers, a 
    - **Throughput Mbps**: `None` (Safely handled; no fake numbers fabricated)
    - **Error Message**: `HTTP/Network error: timed out`
 
-### C. Critical Scope Distinction: Localhost vs. Wi-Fi Verification
+### C. Critical Scope Distinction: Localhost vs. Wi-Fi Verification & UI Status
 - **Verified on Development Machine**: Proves that the HTTP client, byte counter, wall-clock timer, Mbps formula, error handling, and `ThroughputResult` object are 100% bug-free and operational.
 - **Not Proved by Localhost**: Loopback traffic (`127.0.0.1`) does not cross the physical Wi-Fi air interface.
-- **Future College Survey Procedure**: During on-site college survey execution (Milestone 9), `scripts/throughput_server.py` will be launched on an Ethernet-connected server on the college LAN, and `THROUGHPUT_TARGET_URL` will point to `http://<server-ip>:8088/payload`.
+- **Deferred From Main Survey UI**: Throughput measurement remains fully implemented in the backend, but is currently deferred and hidden from the main user-facing metric selector because measuring physical Wi-Fi throughput requires a reachable dedicated LAN/intranet target.
+- **College Wi-Fi Environment**: Enterprise Wi-Fi with AP Client Isolation prevents peer-to-peer laptop routing on the campus network.
+- **Future Activation**: When an accessible dedicated Ethernet/LAN server or intranet throughput target is provisioned, `THROUGHPUT_TARGET_URL` can be populated in `.env` and the metric selector option re-enabled in the UI.
 
 ---
 
