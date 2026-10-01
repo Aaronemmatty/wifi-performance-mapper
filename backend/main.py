@@ -16,7 +16,7 @@ from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, Query, Response, status
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator, ConfigDict
-import psycopg2
+import sqlite3
 
 from backend.repository import (
     create_session,
@@ -30,6 +30,7 @@ from backend.measurement_service import (
     execute_and_persist_measurement,
     MeasurementServiceResult,
 )
+from backend.database import init_db
 
 
 # ----------------------------------------------------------------------
@@ -164,6 +165,8 @@ class MeasureResponse(BaseModel):
 
 def create_app(database_url: Optional[str] = None, is_test: bool = False) -> FastAPI:
     """Create and configure the FastAPI application instance."""
+    init_db(database_url=database_url, is_test=is_test)
+
     app = FastAPI(
         title="Grid-Based Wi-Fi Performance Mapping API",
         description="HTTP REST API for survey sessions and Wi-Fi performance measurement persistence.",
@@ -205,7 +208,7 @@ def create_app(database_url: Optional[str] = None, is_test: bool = False) -> Fas
             return session
         except ValueError as ve:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
-        except psycopg2.IntegrityError:
+        except sqlite3.IntegrityError:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
                 detail=f"Session with session_id '{payload.session_id}' already exists.",
@@ -298,7 +301,7 @@ def create_app(database_url: Optional[str] = None, is_test: bool = False) -> Fas
             return measurement
         except ValueError as ve:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
-        except psycopg2.IntegrityError:
+        except sqlite3.IntegrityError:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Invalid measurement: referenced session '{payload.session_id}' does not exist.",
@@ -437,7 +440,7 @@ def create_app(database_url: Optional[str] = None, is_test: bool = False) -> Fas
             )
         except ValueError as ve:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
-        except psycopg2.IntegrityError:
+        except sqlite3.IntegrityError:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Invalid measurement: referenced session '{payload.session_id}' does not exist.",

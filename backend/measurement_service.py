@@ -119,7 +119,7 @@ def execute_and_persist_measurement(
 
     Raises:
         ValueError: If session_id, floor, x, y, or sample_count are invalid.
-        psycopg2.IntegrityError: If session_id does not reference an existing session.
+        sqlite3.IntegrityError: If session_id does not reference an existing session.
     """
     if not session_id or not str(session_id).strip():
         raise ValueError("session_id must be a non-empty string")

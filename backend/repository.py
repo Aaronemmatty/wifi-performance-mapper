@@ -44,7 +44,7 @@ def create_session(
     ts = created_at or datetime.now(timezone.utc)
     sql = """
     INSERT INTO measurement_sessions (session_id, name, floor, created_at, notes)
-    VALUES (%s, %s, %s, %s, %s)
+    VALUES (?, ?, ?, ?, ?)
     RETURNING session_id, name, floor, created_at, notes;
     """
     with get_db_cursor(database_url=database_url, is_test=is_test) as cur:
@@ -62,7 +62,7 @@ def get_session(
     sql = """
     SELECT session_id, name, floor, created_at, notes
     FROM measurement_sessions
-    WHERE session_id = %s;
+    WHERE session_id = ?;
     """
     with get_db_cursor(database_url=database_url, is_test=is_test) as cur:
         cur.execute(sql, (session_id,))
@@ -147,10 +147,10 @@ def create_measurement(
         ssid, bssid, channel, frequency_mhz, radio_type, adapter_name, driver_version,
         sample_count, timestamp
     ) VALUES (
-        %s, %s, %s, %s,
-        %s, %s, %s, %s, %s,
-        %s, %s, %s, %s, %s, %s, %s,
-        %s, %s
+        ?, ?, ?, ?,
+        ?, ?, ?, ?, ?,
+        ?, ?, ?, ?, ?, ?, ?,
+        ?, ?
     )
     RETURNING
         id, session_id, floor, x, y,
@@ -178,7 +178,7 @@ def get_measurement(
 ) -> Optional[Dict[str, Any]]:
     """Retrieve an individual measurement record by ID."""
     sql = """
-    SELECT * FROM measurements WHERE id = %s;
+    SELECT * FROM measurements WHERE id = ?;
     """
     with get_db_cursor(database_url=database_url, is_test=is_test) as cur:
         cur.execute(sql, (measurement_id,))
@@ -194,7 +194,7 @@ def get_measurements_by_session(
     """Retrieve all measurements associated with a session, ordered chronologically."""
     sql = """
     SELECT * FROM measurements
-    WHERE session_id = %s
+    WHERE session_id = ?
     ORDER BY timestamp ASC, id ASC;
     """
     with get_db_cursor(database_url=database_url, is_test=is_test) as cur:
@@ -217,14 +217,14 @@ def get_measurements_by_location(
     if session_id:
         sql = """
         SELECT * FROM measurements
-        WHERE floor = %s AND x = %s AND y = %s AND session_id = %s
+        WHERE floor = ? AND x = ? AND y = ? AND session_id = ?
         ORDER BY timestamp ASC, id ASC;
         """
         params = (floor, float(x), float(y), session_id)
     else:
         sql = """
         SELECT * FROM measurements
-        WHERE floor = %s AND x = %s AND y = %s
+        WHERE floor = ? AND x = ? AND y = ?
         ORDER BY timestamp ASC, id ASC;
         """
         params = (floor, float(x), float(y))
@@ -251,16 +251,16 @@ def list_measurements(
     params: List[Any] = []
 
     if session_id is not None:
-        conditions.append("session_id = %s")
+        conditions.append("session_id = ?")
         params.append(session_id)
     if floor is not None:
-        conditions.append("floor = %s")
+        conditions.append("floor = ?")
         params.append(floor)
     if x is not None:
-        conditions.append("x = %s")
+        conditions.append("x = ?")
         params.append(float(x))
     if y is not None:
-        conditions.append("y = %s")
+        conditions.append("y = ?")
         params.append(float(y))
 
     where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""

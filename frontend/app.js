@@ -220,9 +220,19 @@
     state.activeSessionId = sessionId || null;
     if (elements.activeSessionBadge) {
       elements.activeSessionBadge.textContent = state.activeSessionId
-        ? `Session: ${state.activeSessionId}`
-        : "Session: None";
+        ? state.activeSessionId
+        : "No active session";
     }
+    // Toggle the chip-dot live indicator
+    const sdot = document.getElementById("sdot");
+    if (sdot) {
+      if (state.activeSessionId) {
+        sdot.classList.add("on");
+      } else {
+        sdot.classList.remove("on");
+      }
+    }
+
     if (elements.sessionSelect && sessionId) {
       elements.sessionSelect.value = sessionId;
     }
@@ -337,6 +347,7 @@
   function renderSurveyProgress() {
     const coverage = calculateSurveyCoverage(state.sessionMeasurements);
 
+    // Sidebar progress card (original IDs used by app.js)
     if (elements.surveyCoverageText) {
       elements.surveyCoverageText.textContent = `Coverage: ${coverage.distinctCount} / 60 cells (${coverage.percentage.toFixed(1)}%)`;
     }
@@ -349,7 +360,37 @@
     if (elements.surveyProgressBarTrack) {
       elements.surveyProgressBarTrack.setAttribute("aria-valuenow", coverage.percentage.toFixed(1));
     }
+
+    // Coverage strip (new header-level bar)
+    const pctEl = document.getElementById("survey-coverage-pct");
+    if (pctEl) pctEl.textContent = `${Math.round(coverage.percentage)}%`;
+
+    const coverageCellsEl = document.getElementById("survey-coverage-text");
+    if (coverageCellsEl) coverageCellsEl.textContent = `${coverage.distinctCount} of 60 cells`;
+
+    const readingsEl = document.getElementById("survey-total-readings-text");
+    if (readingsEl) readingsEl.textContent = `${coverage.totalReadings} readings`;
+
+    const stripBarFill = document.getElementById("survey-progress-bar-fill");
+    if (stripBarFill) stripBarFill.style.width = `${coverage.percentage.toFixed(1)}%`;
+
+    const stripBarTrack = document.getElementById("survey-progress-bar-track");
+    if (stripBarTrack) stripBarTrack.setAttribute("aria-valuenow", coverage.percentage.toFixed(1));
+
+    // Sidebar duplicates (new _sidebar IDs)
+    const sidebarCovEl = document.getElementById("survey-coverage-text-sidebar");
+    if (sidebarCovEl) sidebarCovEl.textContent = `Coverage: ${coverage.distinctCount} / 60 cells (${coverage.percentage.toFixed(1)}%)`;
+
+    const sidebarReadEl = document.getElementById("survey-total-readings-text-sidebar");
+    if (sidebarReadEl) sidebarReadEl.textContent = `Total Readings: ${coverage.totalReadings}`;
+
+    const sidebarBarFill = document.getElementById("survey-progress-bar-fill-sidebar");
+    if (sidebarBarFill) sidebarBarFill.style.width = `${coverage.percentage.toFixed(1)}%`;
+
+    const sidebarBarTrack = document.getElementById("survey-progress-bar-track-sidebar");
+    if (sidebarBarTrack) sidebarBarTrack.setAttribute("aria-valuenow", coverage.percentage.toFixed(1));
   }
+
 
   /**
    * Render measurement history for the selected cell (M14).
@@ -1077,22 +1118,43 @@
       });
     }
 
-    // Metric selector change (Instant client-side re-render, zero API calls)
-    if (elements.metricSelect) {
+    // Metric selector: segmented button click delegation (Instant client-side re-render, zero API calls)
+    const metricSelectorContainer = document.getElementById("metric-selector-container");
+    if (metricSelectorContainer) {
+      metricSelectorContainer.addEventListener("click", function (evt) {
+        const btn = evt.target.closest("button[data-metric]");
+        if (!btn) return;
+        // Update aria-pressed on all sibling buttons
+        metricSelectorContainer.querySelectorAll("button[data-metric]").forEach((b) => {
+          b.setAttribute("aria-pressed", "false");
+          b.classList.remove("seg-active");
+        });
+        btn.setAttribute("aria-pressed", "true");
+        btn.classList.add("seg-active");
+        state.selectedMetric = btn.dataset.metric;
+        renderHeatmap();
+      });
+    } else if (elements.metricSelect) {
+      // Fallback: legacy <select> if present
       elements.metricSelect.addEventListener("change", function () {
         state.selectedMetric = elements.metricSelect.value;
         renderHeatmap();
       });
     }
 
-    // Toggle create session form
+    // Toggle create session form (header button + sidebar alias button)
+    function toggleCreateSessionForm() {
+      if (!elements.createSessionForm) return;
+      const isHidden = elements.createSessionForm.style.display === "none";
+      elements.createSessionForm.style.display = isHidden ? "block" : "none";
+      clearSessionMsg();
+    }
     if (elements.toggleCreateSessionBtn) {
-      elements.toggleCreateSessionBtn.addEventListener("click", function () {
-        if (!elements.createSessionForm) return;
-        const isHidden = elements.createSessionForm.style.display === "none";
-        elements.createSessionForm.style.display = isHidden ? "block" : "none";
-        clearSessionMsg();
-      });
+      elements.toggleCreateSessionBtn.addEventListener("click", toggleCreateSessionForm);
+    }
+    const toggleAlias = document.getElementById("toggle-create-session-btn-alias");
+    if (toggleAlias) {
+      toggleAlias.addEventListener("click", toggleCreateSessionForm);
     }
 
     // Cancel create session form
