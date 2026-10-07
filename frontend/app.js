@@ -543,12 +543,25 @@
   }
 
   /**
-   * Continuous perceptual color mapping: t in [0, 1] -> hsla color.
-   * t = 0 -> Blue (240 deg), t = 0.5 -> Cyan (180 deg), t = 1.0 -> Emerald Green (120 deg).
+   * Continuous purple-to-bright-green heatmap ramp, passing through teal.
    */
   function getHeatmapColor(t) {
-    const hue = Math.round(240 - t * 120);
-    return `hsla(${hue}, 85%, 48%, 0.85)`;
+    const colorStops = [
+      { position: 0, color: [124, 85, 165] },
+      { position: 0.5, color: [77, 182, 154] },
+      { position: 1, color: [111, 220, 91] },
+    ];
+    const safeT = Math.max(0, Math.min(1, t));
+    const upperIndex = colorStops.findIndex((stop) => stop.position >= safeT);
+    const lower = colorStops[Math.max(0, upperIndex - 1)];
+    const upper = colorStops[upperIndex < 0 ? colorStops.length - 1 : upperIndex];
+    const localT = upper.position === lower.position
+      ? 0
+      : (safeT - lower.position) / (upper.position - lower.position);
+    const [r, g, b] = lower.color.map((channel, index) =>
+      Math.round(channel + (upper.color[index] - channel) * localT)
+    );
+    return `rgba(${r}, ${g}, ${b}, 0.85)`;
   }
 
   /**
@@ -723,12 +736,14 @@
     if (!cellInfo) {
       if (elements.noSelectionMsg) elements.noSelectionMsg.style.display = "flex";
       if (elements.cellDetailsContainer) elements.cellDetailsContainer.style.display = "none";
+      if (elements.cellHistorySection) elements.cellHistorySection.style.display = "none";
       updateMeasureButtonState();
       return;
     }
 
     if (elements.noSelectionMsg) elements.noSelectionMsg.style.display = "none";
     if (elements.cellDetailsContainer) elements.cellDetailsContainer.style.display = "flex";
+    if (elements.cellHistorySection) elements.cellHistorySection.style.display = "flex";
 
     if (elements.fieldCellId) elements.fieldCellId.textContent = cellInfo.cellId;
     if (elements.fieldFloor) elements.fieldFloor.textContent = cellInfo.floor;

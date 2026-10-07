@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" id="floorplan-svg" data-floor="Floor-1">
   <defs>
     <style>
-      .bg-canvas { fill: #0f172a; }
-      .outer-wall { fill: none; stroke: #38bdf8; stroke-width: 4; }
-      .inner-wall { fill: none; stroke: #64748b; stroke-width: 2.5; stroke-dasharray: none; }
-      .room-bg { fill: #1e293b; fill-opacity: 0.6; }
-      .corridor-bg { fill: #0f172a; fill-opacity: 0.3; }
-      .room-label { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 600; fill: #94a3b8; text-anchor: middle; }
+      .bg-canvas { fill: #f7f9fb; }
+      .outer-wall { fill: none; stroke: #0b6bcb; stroke-width: 4; }
+      .inner-wall { fill: none; stroke: #94a3b8; stroke-width: 2.5; stroke-dasharray: none; }
+      .room-bg { fill: #ffffff; fill-opacity: 0.92; }
+      .corridor-bg { fill: #edf3fb; fill-opacity: 0.9; }
+      .room-label { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 600; fill: #334155; text-anchor: middle; }
       .room-sub { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; font-weight: 400; fill: #64748b; text-anchor: middle; }
-      .door { stroke: #38bdf8; stroke-width: 2; stroke-linecap: round; }
-      .grid-cell { fill: rgba(56, 189, 248, 0.06); stroke: rgba(56, 189, 248, 0.25); stroke-width: 1; transition: fill 0.15s ease, stroke 0.15s ease; cursor: pointer; }
-      .grid-cell:hover { fill: rgba(56, 189, 248, 0.22); stroke: rgba(56, 189, 248, 0.8); stroke-width: 1.5; }
-      .cell-label { font-family: monospace; font-size: 8px; fill: rgba(148, 163, 184, 0.4); text-anchor: middle; pointer-events: none; }
-      .ap-icon { fill: #38bdf8; }
-      .compass-text { font-family: system-ui, sans-serif; font-size: 11px; fill: #64748b; font-weight: bold; }
+      .door { stroke: #0b6bcb; stroke-width: 2; stroke-linecap: round; }
+      .grid-cell { fill: rgba(11, 107, 203, 0.04); stroke: rgba(11, 107, 203, 0.2); stroke-width: 1; transition: fill 0.15s ease, stroke 0.15s ease; cursor: pointer; }
+      .grid-cell:hover { fill: rgba(11, 107, 203, 0.12); stroke: rgba(11, 107, 203, 0.7); stroke-width: 1.5; }
+      .cell-label { font-family: monospace; font-size: 8px; fill: rgba(71, 85, 105, 0.5); text-anchor: middle; pointer-events: none; }
+      .ap-icon { fill: #0b6bcb; }
+      .compass-text { font-family: system-ui, sans-serif; font-size: 11px; fill: #475569; font-weight: bold; }
     </style>
   </defs>
 
